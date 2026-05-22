@@ -1,0 +1,3 @@
+[submodule "admin_console_shadcn"]
+	path = admin_console_shadcn
+	url = https://github.com/AsadAliQuant/faisal-ai-admin-console-shadcn
