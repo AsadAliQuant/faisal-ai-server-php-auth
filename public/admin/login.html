@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 2rem; }
+    .card { max-width: 380px; margin: 2rem auto; padding: 1.5rem; border: 1px solid #ddd; border-radius: 8px; }
+    label { display:block; margin-top: .75rem; }
+    input { width: 100%; padding: .5rem; margin-top: .25rem; }
+    button { margin-top: 1rem; padding: .6rem 1rem; }
+    .error { color: #b00020; margin-top: .5rem; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Admin Login</h2>
+    <form id="loginForm">
+      <label>Email
+        <input type="email" id="email" required />
+      </label>
+      <label>Password
+        <input type="password" id="password" required />
+      </label>
+      <button type="submit">Login</button>
+      <div class="error" id="error"></div>
+    </form>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const errorEl = document.getElementById('error');
+      errorEl.textContent = '';
+      try {
+        const tokens = await AdminAPI.login(email, password);
+        if (tokens && tokens.user && tokens.user.role === 'admin') {
+          location.href = 'dashboard.html';
+        } else {
+          errorEl.textContent = 'Not an admin account';
+        }
+      } catch (err) {
+        errorEl.textContent = err.message || 'Login failed';
+      }
+    });
+  </script>
+</body>
+</html>

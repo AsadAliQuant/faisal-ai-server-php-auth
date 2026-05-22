@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 1.5rem; }
+    header { display:flex; align-items:center; justify-content: space-between; }
+    .row { display:flex; gap:2rem; flex-wrap:wrap; margin-top:1rem; }
+    .card { flex: 1 1 380px; border:1px solid #ddd; border-radius:8px; padding:1rem; }
+    table { width:100%; border-collapse: collapse; margin-top:.5rem; }
+    th, td { border:1px solid #eee; padding:.5rem; text-align:left; }
+    label { display:block; margin-top:.5rem; }
+    input, select { width:100%; padding:.4rem; }
+    button { margin-top:.5rem; padding:.5rem .8rem; }
+    .muted { color:#666; font-size:.9em; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Admin Dashboard</h2>
+    <div>
+      <span id="me" class="muted"></span>
+      <button id="logout">Logout</button>
+    </div>
+  </header>
+
+  <div class="row">
+    <div class="card">
+      <h3>Create User</h3>
+      <form id="createForm">
+        <label>Name
+          <input type="text" id="c_name" />
+        </label>
+        <label>Email
+          <input type="email" id="c_email" required />
+        </label>
+        <label>Password
+          <input type="text" id="c_password" required />
+        </label>
+        <label>Role
+          <select id="c_role">
+            <option value="user">user</option>
+            <option value="admin">admin</option>
+          </select>
+        </label>
+        <label>Status
+          <select id="c_status">
+            <option value="active">active</option>
+            <option value="disabled">disabled</option>
+          </select>
+        </label>
+        <button type="submit">Create</button>
+        <div id="c_msg" class="muted"></div>
+      </form>
+    </div>
+
+    <div class="card" style="flex:2 1 520px;">
+      <h3>Users</h3>
+      <div class="muted">Reset password sets a new random password and shows it once.</div>
+      <table id="usersTbl">
+        <thead>
+          <tr><th>ID</th><th>Email</th><th>Name</th><th>Role</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    const el = sel => document.querySelector(sel);
+
+    function rndPass(len=12){
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*';
+      let s=''; for(let i=0;i<len;i++){ s += chars[Math.floor(Math.random()*chars.length)]; }
+      return s;
+    }
+
+    async function loadUsers(){
+      const res = await AdminAPI.authFetch('admin/users', { method:'GET' });
+      const data = await res.json();
+      const tbody = el('#usersTbl tbody');
+      tbody.innerHTML = '';
+      (data.users||[]).forEach(u => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${u.id}</td>
+          <td>${u.email}</td>
+          <td>${u.name||''}</td>
+          <td>${u.role}</td>
+          <td>${u.status}</td>
+          <td>
+            <button data-act="reset" data-id="${u.id}">Reset PW</button>
+            <button data-act="status" data-id="${u.id}" data-next="${u.status==='active'?'disabled':'active'}">
+              ${u.status==='active'?'Disable':'Activate'}
+            </button>
+          </td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.addEventListener('click', async (e)=>{
+      const btn = e.target.closest('button'); if(!btn) return;
+      const act = btn.getAttribute('data-act');
+      if (act === 'reset'){
+        const id = btn.getAttribute('data-id');
+        const newpw = rndPass();
+        const res = await AdminAPI.authFetch(`admin/users/${id}/reset-password`, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ new_password: newpw })
+        });
+        if (res.ok){
+          alert('New password: ' + newpw);
+        } else {
+          alert('Failed to reset');
+        }
+      } else if (act === 'status'){
+        const id = btn.getAttribute('data-id');
+        const next = btn.getAttribute('data-next');
+        const res = await AdminAPI.authFetch(`admin/users/${id}/status`, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ status: next })
+        });
+        if (res.ok){ loadUsers(); }
+      }
+    });
+
+    el('#createForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const payload = {
+        name: el('#c_name').value.trim()||null,
+        email: el('#c_email').value.trim(),
+        password: el('#c_password').value.trim(),
+        role: el('#c_role').value,
+        status: el('#c_status').value
+      };
+      const res = await AdminAPI.authFetch('admin/users', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      if (res.ok){
+        el('#c_msg').textContent = 'User created';
+        e.target.reset();
+        loadUsers();
+      } else {
+        const t = await res.json().catch(()=>({}));
+        el('#c_msg').textContent = t.error || 'Failed';
+      }
+    });
+
+    (async function init(){
+      const me = await AdminAPI.requireAdminOrRedirect();
+      el('#me').textContent = me.email + ' (' + me.role + ')';
+      loadUsers();
+    })();
+
+    el('#logout').addEventListener('click', async ()=>{
+      await AdminAPI.logoutAll();
+      location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(openssl rand *)",
+      "Bash(npm run *)",
+      "Read(//c/Users/Asad/AppData/Local/Temp/**)",
+      "PowerShell(netstat -ano)",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\xampp\\\\htdocs\\\\server-php-auth\" -Force | Format-Table Name, @{Name=\"Type\"; Expression={if \\($_.PSIsContainer\\) { \"DIR\" } else { \"FILE\" }}})",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\xampp\\\\htdocs\\\\server-php-auth\\\\src\" -Recurse -File | Select-Object Name, @{Name=\"Size\\(KB\\)\"; Expression={[math]::Round\\($_.Length/1KB, 2\\)}} | Format-Table)",
+      "PowerShell(Get-ChildItem \"$env:USERPROFILE\\\\Desktop\\\\console\" -Force | Select-Object Name)",
+      "PowerShell(Get-ChildItem \"$env:USERPROFILE\\\\Desktop\\\\console\" -Force)",
+      "Read(//c/Users/Asad/Desktop/console/**)",
+      "PowerShell(Get-ChildItem \"c:\\\\xampp\\\\htdocs\\\\server-php-auth\\\\production\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Replace\\(\"c:\\\\xampp\\\\htdocs\\\\server-php-auth\\\\production\\\\\",\"\"\\) })",
+      "Bash(Get-ChildItem -Path \"c:\\\\xampp\\\\htdocs\\\\server-php-auth\" -Force)",
+      "Bash(Select-Object Name, FullName)",
+      "Bash(grep -r \"C:\\\\\\\\Users\\\\|C:\\\\\\\\.*Desktop\\\\|^C:\\\\\\\\\" \"c:\\\\xampp\\\\htdocs\\\\server-php-auth\" --include=\"*.php\" --include=\"*.js\" --include=\"*.ts\" --include=\"*.jsx\" --include=\"*.tsx\")",
+      "Bash(xargs grep -l \"Desktop\\\\|Users.*Asad\")",
+      "Bash(grep -r \"C:\\\\\\\\\\\\\\\\Users\\\\|C:\\\\\\\\\\\\\\\\.*Desktop\\\\|C:\\\\\\\\\\\\\\\\.*Asad\\\\|console.zip\" \"c:\\\\xampp\\\\htdocs\\\\server-php-auth\" --include=\"*.json\" --include=\"*.ts\" --include=\"*.tsx\" --include=\"*.php\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\xampp\\\\htdocs\\\\server-php-auth\" -Recurse -Force)",
+      "Bash(Select-Object -First 100)",
+      "Bash(Format-Table FullName, PSIsContainer)",
+      "PowerShell(Get-ChildItem \"c:\\\\xampp\\\\htdocs\\\\server-php-auth\\\\production\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object FullName | ForEach-Object { $_.FullName.Replace\\(\"c:\\\\xampp\\\\htdocs\\\\server-php-auth\\\\production\\\\\",\"\"\\) })",
+      "PowerShell(Get-ChildItem \"c:\\\\xampp\\\\htdocs\\\\server-php-auth\\\\production\" -Recurse | Where-Object { !$_.PSIsContainer } | ForEach-Object { $_.FullName.Replace\\(\"c:\\\\xampp\\\\htdocs\\\\server-php-auth\\\\production\\\\\",\"\"\\) } | Sort-Object)",
+      "Bash(xargs grep -l \"license\\\\|License\")",
+      "Bash(\"C:\\\\xampp\\\\mysql\\\\bin\\\\mysql.exe\" -h 127.0.0.1 -P 3600 -u root ai_auth -e \"ALTER TABLE licenses ADD COLUMN deleted_at DATETIME NULL DEFAULT NULL;\")",
+      "Bash(\"C:\\\\xampp\\\\mysql\\\\bin\\\\mysql.exe\" -h 127.0.0.1 -P 3600 -u root ai_auth -e \"SHOW COLUMNS FROM licenses LIKE 'deleted_at';\")",
+      "Bash(rm -rf c:/xampp/htdocs/server-php-auth/production/*)",
+      "Bash(echo \"Cleared production/\")"
+    ]
+  }
+}

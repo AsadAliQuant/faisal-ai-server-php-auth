@@ -1,0 +1,10 @@
+{"ts":"2026-05-19T17:58:29.535Z","cmd":"status","args":"","origin":"http://127.0.0.1:34567/welcome","durationMs":2,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-19T17:58:34.049Z","cmd":"status","args":"","origin":"http://127.0.0.1:34567/welcome","durationMs":0,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-19T18:01:11.982Z","cmd":"goto","args":"http://localhost:5173","origin":"http://localhost:5173/","durationMs":576,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-19T18:01:20.609Z","cmd":"screenshot","args":"","origin":"http://localhost:5173/","durationMs":233,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-19T18:01:44.021Z","cmd":"fill","args":"input[type='email'] asadaly.developer@gmail.com","origin":"http://localhost:5173/","durationMs":32,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-19T18:01:44.184Z","cmd":"fill","args":"input[type='password'] testpass123","origin":"http://localhost:5173/","durationMs":20,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-19T18:01:44.385Z","cmd":"click","args":"button[type='submit']","origin":"http://localhost:5173/","durationMs":63,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-19T18:01:51.555Z","cmd":"screenshot","args":"","origin":"http://localhost:5173/","durationMs":105,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-19T18:04:14.182Z","cmd":"screenshot","args":"","origin":"http://localhost:5173/","durationMs":103,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-19T18:05:10.281Z","cmd":"click","args":"[data-sidebar='trigger']","origin":"http://localhost:5173/","durationMs":35015,"status":"error","hasCookies":false,"mode":"headed","error":"locator.click: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-sidebar=\\'trigger\\']')\u001b[22m\n"}

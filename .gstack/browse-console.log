@@ -1,0 +1,10 @@
+[2026-05-19T17:58:30.206Z] [error] Failed to load resource: the server responded with a status of 401 (Unauthorized)
+[2026-05-19T18:01:11.522Z] [debug] [vite] connecting...
+[2026-05-19T18:01:11.528Z] [debug] [vite] connected.
+[2026-05-19T18:01:11.924Z] [info] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[2026-05-19T18:03:32.051Z] [debug] [vite] hot updated: /src/components/user-dashboard.tsx
+[2026-05-19T18:03:32.051Z] [debug] [vite] hot updated: /@fs/C:/xampp/htdocs/server-php-auth/admin_console_shadcn/packages/ui/src/styles/globals.css
+[2026-05-19T18:03:46.800Z] [debug] [vite] hot updated: /src/components/user-dashboard.tsx
+[2026-05-19T18:03:46.800Z] [debug] [vite] hot updated: /@fs/C:/xampp/htdocs/server-php-auth/admin_console_shadcn/packages/ui/src/styles/globals.css
+[2026-05-19T18:04:01.543Z] [debug] [vite] hot updated: /src/components/user-dashboard.tsx
+[2026-05-19T18:04:01.543Z] [debug] [vite] hot updated: /@fs/C:/xampp/htdocs/server-php-auth/admin_console_shadcn/packages/ui/src/styles/globals.css

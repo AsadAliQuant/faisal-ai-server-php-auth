@@ -1,0 +1,24 @@
+USE ai_auth;
+
+CREATE TABLE IF NOT EXISTS licenses (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `key` VARCHAR(100) NOT NULL UNIQUE,
+  type ENUM('standard','trial') DEFAULT 'standard',
+  status ENUM('active','expired','revoked') DEFAULT 'active',
+  assigned_to VARCHAR(190) NULL,
+  assigned_name VARCHAR(190) NULL,
+  notes TEXT NULL,
+  expires_at DATETIME NOT NULL,
+  deleted_at DATETIME NULL DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS license_activity (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  action VARCHAR(100) NOT NULL,
+  license_key VARCHAR(100) NOT NULL,
+  by_user VARCHAR(190) NOT NULL,
+  detail TEXT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

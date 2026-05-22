@@ -1,0 +1,15 @@
+DirectoryIndex index.html index.php
+
+RewriteEngine On
+
+# Pass Authorization header to PHP (stripped by Apache CGI/FastCGI)
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# Static files/dirs → serve directly (React assets: JS, CSS, images)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# All non-static requests → PHP router (Vite strips /api prefix before forwarding)
+RewriteRule ^ index.php [QSA,L]
